@@ -1,6 +1,7 @@
 export default{
     name: 'achievement',
     title: 'Achievements and Certifications',
+    type: 'document',
     fields: [
         {
             name: 'title',
