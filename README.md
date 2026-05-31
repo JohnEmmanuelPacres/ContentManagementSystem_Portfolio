@@ -1,8 +1,8 @@
-# Pacres' Dynamic Portfolio 🚀
+# Pacres' Dynamic Portfolio
 
 Welcome to my personal portfolio repository! I built this portfolio from scratch with a focus on **automation and scalability**. Instead of manually updating the code every time I get a new certification, complete a new project, or achieve a new milestone, I integrated a headless Content Management System (CMS) to manage all my content dynamically.
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 This repository is organized into a monorepo structure with three distinct parts:
 
@@ -10,14 +10,14 @@ This repository is organized into a monorepo structure with three distinct parts
 - **`portfolio-cms/`**: The Content Management System (built with Sanity). This is where I log in to add new projects, achievements, and certifications. As soon as I publish content here, it reflects on the frontend automatically.
 - **`portfolio-chatbot/`**: A conversational AI backend built with Python that serves as an interactive assistant for visitors on the site.
 
-## ✨ Key Features
+## Key Features
 
 * **Dynamic Content Delivery**: No more hardcoding! All achievements, projects, and certifications are fetched dynamically from the CMS.
 * **Easy Maintenance**: Content updates are made through a user-friendly CMS dashboard.
 * **AI Chatbot Integration**: Visitors can interact with a custom chatbot to learn more about my background and skills.
 * **Modern Tech Stack**: Built with modern web development practices for optimal performance and SEO.
 
-## 🚀 Getting Started
+## Getting Started
 
 To run this project locally, you will need to start each of the services.
 
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 # Run the chatbot server script
 ```
 
-## 🛠️ Built With
+## Built With
 - **Frontend**: *[Insert Frontend Framework here, e.g., Next.js / React]*
 - **CMS**: Sanity
 - **Chatbot**: Python
