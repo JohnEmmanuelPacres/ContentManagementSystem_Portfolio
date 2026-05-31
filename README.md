@@ -49,9 +49,10 @@ pip install -r requirements.txt
 ```
 
 ## Built With
-- **Frontend**: *[Insert Frontend Framework here, e.g., Next.js / React]*
+- **Frontend**: Next.js (TypeScript + Tailwind)
 - **CMS**: Sanity
-- **Chatbot**: Python
+- **Chatbot Backend**: Python
+- **Cloud Infrastructure**: Google Cloud Run + Artifact Registry
 
 ---
 *This README will be updated as the project grows and new features are added.*
