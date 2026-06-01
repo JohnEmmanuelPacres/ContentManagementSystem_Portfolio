@@ -6,7 +6,7 @@ Instead of manually updating source code for new projects or achievements, this 
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 * **Premium Dark Mode & Glassmorphism**: Designed with a sleek dark aesthetic (`slate-950` background), glowing background auroras, responsive flex/grid layouts, and responsive side-by-side hero sections.
 * **Micro-Animations**: Hover-triggered glowing border highlights, scale-up transformations on project cards, and a subtle glowing aura around the profile photo.
@@ -15,7 +15,7 @@ Instead of manually updating source code for new projects or achievements, this 
 
 ---
 
-## 🛠️ Project Architecture
+## Project Architecture
 
 This repository is organized as a monorepo containing three primary services:
 
@@ -25,7 +25,7 @@ This repository is organized as a monorepo containing three primary services:
 
 ---
 
-## 🛠️ Built With
+## Built With
 
 * **Frontend**: Next.js 15+ (React 19, TypeScript, Tailwind CSS v4, Framer Motion/Native CSS transitions)
 * **CMS**: Sanity v3 Studio (GROQ query language)
@@ -33,7 +33,7 @@ This repository is organized as a monorepo containing three primary services:
 
 ---
 
-## ⚙️ Getting Started
+## Getting Started
 
 Follow the steps below to start each service locally on your machine.
 
