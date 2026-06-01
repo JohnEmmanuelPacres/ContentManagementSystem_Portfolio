@@ -1,58 +1,82 @@
-# Pacres' Dynamic Portfolio
+# Pacres' Dynamic Portfolio & AI Assistant
 
-Welcome to my personal portfolio repository! I built this portfolio from scratch with a focus on **automation and scalability**. Instead of manually updating the code every time I get a new certification, complete a new project, or achieve a new milestone, I integrated a headless Content Management System (CMS) to manage all my content dynamically.
+Welcome to my personal portfolio repository! This is a modern, high-performance developer portfolio built from scratch with a focus on **automation, scalability, and premium design**.
 
-## Project Architecture
+Instead of manually updating source code for new projects or achievements, this portfolio integrates a headless Content Management System (CMS) to manage all content dynamically. It also features a floating AI chatbot widget powered by the Google Gemini SDK to guide visitors.
 
-This repository is organized into a monorepo structure with three distinct parts:
+---
 
-- **`portfolio-frontend/`**: The face of the portfolio. This is the client-side application that fetches data from the CMS and displays it beautifully.
-- **`portfolio-cms/`**: The Content Management System (built with Sanity). This is where I log in to add new projects, achievements, and certifications. As soon as I publish content here, it reflects on the frontend automatically.
-- **`portfolio-chatbot/`**: A conversational AI backend built with Python that serves as an interactive assistant for visitors on the site.
+## 🚀 Key Features
 
-## Key Features
+* **Premium Dark Mode & Glassmorphism**: Designed with a sleek dark aesthetic (`slate-950` background), glowing background auroras, responsive flex/grid layouts, and responsive side-by-side hero sections.
+* **Micro-Animations**: Hover-triggered glowing border highlights, scale-up transformations on project cards, and a subtle glowing aura around the profile photo.
+* **CMS-Driven Portfolio Content**: Real-time project syncing (title, description, tech stack, and thumbnail images) using GROQ queries to pull directly from Sanity.
+* **Interactive AI Assistant**: A custom floating chatbot widget in the bottom-right corner built with a glassmorphic popup UI, real-time "thinking" typing indicator, message autoscrolling, and a FastAPI Python backend.
 
-* **Dynamic Content Delivery**: No more hardcoding! All achievements, projects, and certifications are fetched dynamically from the CMS.
-* **Easy Maintenance**: Content updates are made through a user-friendly CMS dashboard.
-* **AI Chatbot Integration**: Visitors can interact with a custom chatbot to learn more about my background and skills.
-* **Modern Tech Stack**: Built with modern web development practices for optimal performance and SEO.
+---
 
-## Getting Started
+## 🛠️ Project Architecture
 
-To run this project locally, you will need to start each of the services.
+This repository is organized as a monorepo containing three primary services:
 
-### 1. Starting the CMS
-Navigate to the CMS directory, install dependencies, and run the development server:
+* **`portfolio-frontend/`**: The Next.js client-side application. It fetches project details from the CMS and handles the user interface.
+* **`portfolio-cms/`**: The headless Content Management System powered by Sanity.io. This handles the content schema and database entries.
+* **`portfolio-chatbot/`**: A FastAPI Python backend that handles communication with the Google Gemini model.
+
+---
+
+## 🛠️ Built With
+
+* **Frontend**: Next.js 15+ (React 19, TypeScript, Tailwind CSS v4, Framer Motion/Native CSS transitions)
+* **CMS**: Sanity v3 Studio (GROQ query language)
+* **Chatbot Backend**: Python 3.10+ (FastAPI, Google GenAI SDK, Uvicorn)
+
+---
+
+## ⚙️ Getting Started
+
+Follow the steps below to start each service locally on your machine.
+
+### 1. Start the CMS Studio
+Navigate to the CMS directory, install dependencies, and start the local Sanity Studio server:
 ```bash
 cd portfolio-cms
 npm install
 npm run dev
 ```
-*(The CMS studio will typically run on `http://localhost:3333`)*
+*The Sanity Studio panel will run on **`http://localhost:3333`**.*
 
-### 2. Starting the Frontend
-Navigate to the frontend directory, install dependencies, and run the development server:
+### 2. Start the Chatbot Backend
+Navigate to the chatbot directory, activate your Python virtual environment, install dependencies, and launch the Uvicorn server:
+```bash
+cd portfolio-chatbot
+
+# Create virtual environment (if not already done)
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the server
+uvicorn main:app --reload
+```
+*The FastAPI chatbot backend will run on **`http://127.0.0.1:8000`**.*
+
+### 3. Start the Next.js Frontend
+Navigate to the frontend directory, install dependencies, and launch the Next.js development server:
 ```bash
 cd portfolio-frontend
 npm install
 npm run dev
 ```
-
-### 3. Starting the Chatbot Backend
-Navigate to the chatbot directory, activate the virtual environment, and run the server:
-```bash
-cd portfolio-chatbot
-# Create and activate your virtual environment (e.g., python -m venv venv)
-# source venv/bin/activate  (or venv\Scripts\activate on Windows)
-pip install -r requirements.txt
-# Run the chatbot server script
-```
-
-## Built With
-- **Frontend**: Next.js (TypeScript + Tailwind)
-- **CMS**: Sanity
-- **Chatbot Backend**: Python
-- **Cloud Infrastructure**: Google Cloud Run + Artifact Registry
+*The frontend user interface will run on **`http://localhost:3000`**.*
 
 ---
-*This README will be updated as the project grows and new features are added.*
+
+*This README was updated to align with the latest premium dark mode visual overhaul, floating AI assistant, and Gemini API SDK upgrades.*
