@@ -27,6 +27,8 @@ JE wrote his first block-based code in 2017 back in 7th Grade, using Scratch.
 DataCamp Projects: https://github.com/JohnEmmanuelPacres/Datacamp_Projects
 Verilog Hexadecimal 7-Segment: https://github.com/JohnEmmanuelPacres/Hexadecimal_Verilog-HDL-FinalProject
 ASTRA Decision Support System Framework: https://github.com/JohnEmmanuelPacres/ASTRA-Decision-Support-System-Framework 
+EcoCalc Plus: https://github.com/JohnEmmanuelPacres/EcoCalc_Plus
+PacresEcoCalc: https://github.com/JohnEmmanuelPacres/PacresEcoCalc
 
 ## Certifications
 Data Literacy from DataCamp.
