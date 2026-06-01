@@ -48,7 +48,7 @@ async def handle_chat(request: ChatRequest):
             contents=request.message,
             config=types.GenerateContentConfig(
                 system_instruction=portfolio_brain,
-                temperature=0.3,
+                temperature=0.0,
             )
         )
 
