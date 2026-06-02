@@ -1,16 +1,21 @@
 export default{
-    name: "organization",
-    title: "Organization",
+    name: "work",
+    title: "Work",
     type: "document",
-    fields:[
+    fields: [
         {
-            name: 'organizationName',
-            title: 'Organization',
+            name: 'companyName',
+            title: 'Company Name',
             type: 'string',
         },
         {
-            name: 'organizationAddress',
-            title: 'Organization Address',
+            name: 'jobTitle',
+            title: 'Job Title',
+            type: 'string',
+        },
+        {
+            name: 'companyAddress',
+            title: 'Company Address',
             type: 'string',
         },
         {

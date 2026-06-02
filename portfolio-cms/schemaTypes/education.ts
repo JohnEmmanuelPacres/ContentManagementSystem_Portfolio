@@ -21,12 +21,14 @@ export default{
         {
             name: 'startYear',
             title: 'Start Year',
-            type: 'date',
+            type: 'string',
+            description: 'Enter a year (e.g., "2020")',
         },
         {
             name: 'endYear',
             title: 'End Year',
-            type: 'date',
+            type: 'string',
+            description: 'Enter a year (e.g., "2024") or "Present"',
         },
     ],
 }
