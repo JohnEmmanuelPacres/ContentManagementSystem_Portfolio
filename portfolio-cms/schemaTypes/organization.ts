@@ -4,24 +4,24 @@ export default{
     type: "document",
     fields:[
         {
-            name: 'organization-name',
+            name: 'organizationName',
             title: 'Organization',
             type: 'string',
         },
         {
-            name: 'organization-address',
+            name: 'organizationAddress',
             title: 'Organization Address',
             type: 'string',
         },
         {
-            name: 'start-year',
+            name: 'startYear',
             title: 'Start Year',
-            type: 'number',
+            type: 'date',
         },
         {
-            name: 'end-year',
+            name: 'endYear',
             title: 'End Year',
-            type: 'number',
+            type: 'date',
         },
     ]
 }

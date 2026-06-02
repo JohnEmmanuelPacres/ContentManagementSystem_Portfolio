@@ -4,12 +4,12 @@ export default{
     type: 'document',
     fields: [
         {
-            name: 'university',
+            name: 'universityName',
             title: 'University',
             type: 'string',
         },
         {
-            name: 'course-name',
+            name: 'courseName',
             title: 'Course Name',
             type: 'string',
         },
@@ -19,14 +19,14 @@ export default{
             type: 'string',
         },
         {
-            name: 'start-year',
+            name: 'startYear',
             title: 'Start Year',
-            type: 'number',
+            type: 'date',
         },
         {
-            name: 'end-year',
+            name: 'endYear',
             title: 'End Year',
-            type: 'number',
+            type: 'date',
         },
     ],
 }
