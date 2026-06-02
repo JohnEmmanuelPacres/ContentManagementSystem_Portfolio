@@ -33,6 +33,19 @@ This repository is organized as a monorepo containing three primary services:
 
 ---
 
+## Prerequisites
+
+Before you begin, ensure you have the following installed and set up on your local machine:
+
+* **Node.js** (v18.17 or higher recommended)
+* **Python** (v3.10 or higher)
+* **Git** (for version control)
+* **Google Gemini API Key** (required for the chatbot backend to function)
+* **Sanity.io Account** (for managing the CMS content)
+
+*Note: You will also need to configure your environment variables (like your Gemini API key and Sanity project ID) in their respective service directories before running the servers.*
+
+---
 ## Getting Started
 
 Follow the steps below to start each service locally on your machine.
@@ -79,4 +92,4 @@ npm run dev
 
 ---
 
-*This README was updated to align with the latest premium dark mode visual overhaul, floating AI assistant, and Gemini API SDK upgrades.*
+*will update this README as the project goes on*
