@@ -2,6 +2,7 @@
 'use client'; 
 
 import { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 type Message = {
   role: 'user' | 'bot';
@@ -82,10 +83,14 @@ export default function Chatbot() {
               className={`p-3 rounded-2xl max-w-[85%] text-sm leading-relaxed ${
                 msg.role === 'user' 
                   ? 'bg-blue-600 text-white self-end rounded-br-sm' 
-                  : 'bg-slate-800 text-slate-200 border border-slate-700/50 self-start rounded-bl-sm'
+                  : 'bg-slate-800 text-slate-200 border border-slate-700/50 self-start rounded-bl-sm prose prose-sm prose-invert max-w-none'
               }`}
             >
-              {msg.text}
+              {msg.role === 'bot' ? (
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
+              ) : (
+                msg.text
+              )}
             </div>
           ))}
           {isLoading && (
