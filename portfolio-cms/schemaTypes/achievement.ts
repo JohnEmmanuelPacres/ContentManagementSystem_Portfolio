@@ -22,6 +22,14 @@ export default{
             name: 'description',
             title: 'Summary',
             type: 'text',
+        },
+        {
+            name: 'qrImage',
+            title: 'QR Image',
+            type: 'image',
+            options: {
+                hotspot: true,
+            }
         }
     ],
 }
