@@ -4,7 +4,14 @@ import path from "path";
 import { client } from "@/sanity/client";
 import Chatbot from "@/components/Chatbot";
 
-// Define the TypeScript type for your project data
+type Achievement = {
+  _id: string;
+  titleName: string;
+  issuerName: string,
+  issueDate: string,
+  description: string,
+};
+
 type Project = {
   _id: string;
   title: string;
@@ -15,12 +22,28 @@ type Project = {
   imageUrl: string;
 };
 
-// Define the TypeScript type for your education data
 type Education = {
   _id: string;
   universityName: string;
   courseName: string;
   address: string;
+  startYear: string;
+  endYear: string;
+};
+
+type Work = {
+  _id: string;
+  companyName: string;
+  jobTitle: string;
+  companyAddress: string;
+  startYear: string;
+  endYear: string;
+};
+
+type Organization = {
+  _id: string;
+  organizationName: string;
+  organizationRole: string;
   startYear: string;
   endYear: string;
 };
