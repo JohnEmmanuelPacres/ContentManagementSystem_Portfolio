@@ -9,8 +9,8 @@ export default{
             type: 'string',
         },
         {
-            name: 'organizationAddress',
-            title: 'Organization Address',
+            name: 'organizationRole',
+            title: 'Organization Role',
             type: 'string',
         },
         {
