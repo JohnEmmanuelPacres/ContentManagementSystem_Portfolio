@@ -15,6 +15,16 @@ type Project = {
   imageUrl: string;
 };
 
+// Define the TypeScript type for your education data
+type Education = {
+  _id: string;
+  universityName: string;
+  courseName: string;
+  address: string;
+  startYear: string;
+  endYear: string;
+};
+
 export default async function Home() {
   // Fetch data using GROQ syntax
   const projects = await client.fetch<Project[]>(`*[_type == "project"]{
@@ -22,6 +32,10 @@ export default async function Home() {
     "imageUrl": mainImage.asset->url
     }`
   );
+
+  const education = await client.fetch<Education[]>(`*[_type == "education"] | order(startYear desc) {
+    _id, universityName, courseName, address, startYear, endYear
+  }`);
 
   // Check if profile.png exists in the public directory (Server-side check)
   const hasProfileImage = fs.existsSync(path.join(process.cwd(), "public", "profile.png"));
@@ -73,6 +87,46 @@ export default async function Home() {
             </p>
           </div>
         </section>
+
+        {/* Education Section */}
+        {education && education.length > 0 && (
+          <section className="flex flex-col gap-10">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-bold text-slate-100">Education</h2>
+            </div>
+            
+            <div className="flex flex-col gap-6">
+              {education.map((edu) => (
+                <div 
+                  key={edu._id} 
+                  className="group flex flex-col md:flex-row md:items-center justify-between bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-blue-500/30 hover:bg-slate-800/50 transition-all duration-300 p-6 md:p-8"
+                >
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-2xl font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
+                      {edu.universityName}
+                    </h3>
+                    <h4 className="text-xl text-blue-300 font-medium">
+                      {edu.courseName}
+                    </h4>
+                    {edu.address && (
+                      <p className="text-slate-400 flex items-center gap-2 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                        {edu.address}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="mt-4 md:mt-0 flex flex-col items-start md:items-end gap-2">
+                    <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 font-medium">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                      {edu.startYear} - {edu.endYear}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Projects Section */}
         <section className="flex flex-col gap-10">
