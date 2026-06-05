@@ -9,7 +9,10 @@ type Achievement = {
   titleName: string;
   issuerName: string,
   issueDate: string,
+  expirationDate: string,
   description: string,
+  credentialURL: string,
+  qrImage: string,
 };
 
 type Project = {
@@ -58,6 +61,19 @@ export default async function Home() {
 
   const education = await client.fetch<Education[]>(`*[_type == "education"] | order(startYear desc) {
     _id, universityName, courseName, address, startYear, endYear
+  }`);
+
+  const works = await client.fetch<Work[]>(`*[_type == "work"] | order(startYear desc) {
+    _id, companyName, jobTitle, companyAddress, startYear, endYear
+  }`);
+
+  const achievements = await client.fetch<Achievement[]>(`*[_type == "achievement"] | order(issueDate desc) {
+    _id, "titleName": title, "issuerName": issuer, issueDate, expirationDate, description, credentialURL,
+    "qrImage": qrImage.asset->url
+  }`);
+
+  const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] | order(startYear desc) {
+    _id, organizationName, organizationRole, startYear, endYear
   }`);
 
   // Check if profile.png exists in the public directory (Server-side check)
@@ -111,119 +127,282 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Education Section */}
-        {education && education.length > 0 && (
-          <section className="flex flex-col gap-10">
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-bold text-slate-100">Education</h2>
-            </div>
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          {/* Left Column */}
+          <div className="lg:col-span-8 flex flex-col gap-16">
             
-            <div className="flex flex-col gap-6">
-              {education.map((edu) => (
-                <div 
-                  key={edu._id} 
-                  className="group flex flex-col md:flex-row md:items-center justify-between bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-blue-500/30 hover:bg-slate-800/50 transition-all duration-300 p-6 md:p-8"
-                >
-                  <div className="flex flex-col gap-2">
-                    <h3 className="text-2xl font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
-                      {edu.universityName}
-                    </h3>
-                    <h4 className="text-xl text-blue-300 font-medium">
-                      {edu.courseName}
-                    </h4>
-                    {edu.address && (
-                      <p className="text-slate-400 flex items-center gap-2 mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-                        {edu.address}
-                      </p>
+            {/* Work Experience Section */}
+            {works && works.length > 0 && (
+              <section className="flex flex-col gap-8">
+                <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                  Experience
+                </h2>
+                <div className="flex flex-col gap-6">
+                  {works.map((work) => (
+                    <div 
+                      key={work._id} 
+                      className="group flex flex-col sm:flex-row sm:items-start justify-between bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-blue-500/30 hover:bg-slate-800/50 transition-all duration-300 p-6"
+                    >
+                      <div className="flex flex-col gap-2">
+                        <h3 className="text-2xl font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
+                          {work.jobTitle}
+                        </h3>
+                        <h4 className="text-lg text-blue-300 font-medium">
+                          {work.companyName}
+                        </h4>
+                        {work.companyAddress && (
+                          <p className="text-slate-400 text-sm flex items-center gap-2 mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                            {work.companyAddress}
+                          </p>
+                        )}
+                      </div>
+                      <div className="mt-4 sm:mt-0">
+                        <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium whitespace-nowrap">
+                          {work.startYear} - {work.endYear || "Present"}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Achievements Section */}
+            {achievements && achievements.length > 0 && (
+              <section className="flex flex-col gap-8">
+                <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-500"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                  Achievements & Certifications
+                </h2>
+                <div className="flex flex-col gap-6">
+                  {achievements.map((achievement) => (
+                    <div 
+                      key={achievement._id} 
+                      className="group flex flex-col bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-yellow-500/30 hover:bg-slate-800/50 transition-all duration-300 p-6"
+                    >
+                      <div className="flex flex-col sm:flex-row gap-6">
+                        {/* QR Image, if any */}
+                        {achievement.qrImage && (
+                          <div className="shrink-0 hidden sm:block">
+                            <div className="w-20 h-20 rounded-xl overflow-hidden border border-slate-700/50 bg-white p-1.5 shadow-inner">
+                              <img 
+                                src={achievement.qrImage} 
+                                alt="QR Code" 
+                                className="w-full h-full object-contain mix-blend-multiply"
+                              />
+                            </div>
+                          </div>
+                        )}
+                        <div className="flex-1 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                          <div className="flex flex-col gap-2">
+                            <h3 className="text-xl font-semibold text-slate-200 group-hover:text-yellow-400 transition-colors flex items-center gap-3">
+                              {achievement.titleName}
+                              {/* Mobile QR Image */}
+                              {achievement.qrImage && (
+                                <img 
+                                  src={achievement.qrImage} 
+                                  alt="QR" 
+                                  className="w-8 h-8 sm:hidden rounded bg-white p-0.5"
+                                />
+                              )}
+                            </h3>
+                            <h4 className="text-base text-yellow-300/80 font-medium">
+                              {achievement.issuerName}
+                            </h4>
+                            {achievement.description && (
+                              <p className="text-slate-400 text-sm mt-2 leading-relaxed">
+                                {achievement.description}
+                              </p>
+                            )}
+                          </div>
+                          <div className="shrink-0 flex flex-col items-start sm:items-end gap-3">
+                            <div className="flex flex-col gap-2 items-start sm:items-end">
+                              <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium whitespace-nowrap">
+                                Issued: {achievement.issueDate}
+                              </div>
+                              {achievement.expirationDate && (
+                                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-400 text-sm font-medium whitespace-nowrap">
+                                  Expires: {achievement.expirationDate}
+                                </div>
+                              )}
+                            </div>
+                            {achievement.credentialURL && (
+                              <a 
+                                href={achievement.credentialURL} 
+                                target="_blank" 
+                                rel="noreferrer" 
+                                className="text-sm font-medium text-yellow-500/80 hover:text-yellow-400 flex items-center gap-1.5 transition-colors mt-1"
+                              >
+                                View Credential
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Projects Section */}
+            <section className="flex flex-col gap-8">
+              <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-500"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                Featured Projects
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {projects.map((project) => (
+                  <div 
+                    key={project._id} 
+                    className="group flex flex-col bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-indigo-500/30 hover:bg-slate-800/50 transition-all duration-300 overflow-hidden"
+                  >
+                    {/* Thumbnail Image */}
+                    {project.imageUrl && (
+                      <div className="w-full h-48 overflow-hidden bg-slate-800/50">
+                        <img 
+                          src={project.imageUrl} 
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
                     )}
-                  </div>
-                  
-                  <div className="mt-4 md:mt-0 flex flex-col items-start md:items-end gap-2">
-                    <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 font-medium">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                      {edu.startYear} - {edu.endYear}
+                    
+                    <div className="flex-1 flex flex-col p-6 gap-4">
+                      <h3 className="text-xl font-semibold text-slate-200 group-hover:text-indigo-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-slate-400 text-sm leading-relaxed">
+                        {project.description}
+                      </p>
+                      
+                      {/* Tech Stack Pills */}
+                      <div className="flex flex-wrap gap-2 mt-auto pt-4">
+                        {project.techStack?.map((tech, index) => (
+                          <span 
+                            key={index} 
+                            className="px-2.5 py-1 bg-slate-800 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Links */}
+                      <div className="flex items-center gap-4 pt-4 mt-2 border-t border-slate-800/50">
+                        {project.liveUrl && (
+                          <a 
+                            href={project.liveUrl} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-1.5"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            Live Demo
+                          </a>
+                        )}
+                        {project.githubLink && (
+                          <a 
+                            href={project.githubLink} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            GitHub
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Projects Section */}
-        <section className="flex flex-col gap-10">
-          <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-slate-100">Featured Projects</h2>
+                ))}
+              </div>
+            </section>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <div 
-                key={project._id} 
-                className="group flex flex-col bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-blue-500/30 hover:bg-slate-800/50 transition-all duration-300 overflow-hidden"
-              >
-                {/* Thumbnail Image */}
-                {project.imageUrl && (
-                  <div className="w-full h-48 overflow-hidden bg-slate-800/50">
-                    <img 
-                      src={project.imageUrl} 
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                )}
-                
-                <div className="flex-1 flex flex-col p-6 gap-4">
-                  <h3 className="text-xl font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-                  
-                  {/* Tech Stack Pills */}
-                  <div className="flex flex-wrap gap-2 mt-auto pt-4">
-                    {project.techStack?.map((tech, index) => (
-                      <span 
-                        key={index} 
-                        className="px-2.5 py-1 bg-slate-800 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50"
+
+          {/* Right Column: Education & Organization */}
+          <div className="lg:col-span-4 flex flex-col gap-8 relative">
+            <div className="sticky top-24 flex flex-col gap-8 bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-slate-800 p-6 md:p-8 shadow-2xl">
+              
+              {/* Education Section */}
+              {education && education.length > 0 && (
+                <section className="flex flex-col gap-6">
+                  <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    Education
+                  </h2>
+                  <div className="flex flex-col gap-6">
+                    {education.map((edu) => (
+                      <div 
+                        key={edu._id} 
+                        className="group flex flex-col gap-2 border-b border-slate-800/50 pb-6 last:border-0 last:pb-0"
                       >
-                        {tech}
-                      </span>
+                        <h3 className="text-lg font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
+                          {edu.universityName}
+                        </h3>
+                        <h4 className="text-sm text-blue-300/80 font-medium">
+                          {edu.courseName}
+                        </h4>
+                        <div className="flex items-center justify-between mt-1">
+                          {edu.address && (
+                            <span className="text-slate-400 text-xs flex items-center gap-1.5">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                              {edu.address}
+                            </span>
+                          )}
+                          <span className="text-slate-500 text-xs font-medium whitespace-nowrap ml-2">
+                            {edu.startYear} - {edu.endYear || "Present"}
+                          </span>
+                        </div>
+                      </div>
                     ))}
                   </div>
+                </section>
+              )}
 
-                  {/* Links */}
-                  <div className="flex items-center gap-4 pt-4 mt-2 border-t border-slate-800/50">
-                    {project.liveUrl && (
-                      <a 
-                        href={project.liveUrl} 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1.5"
+              {/* Divider if both exist */}
+              {education?.length > 0 && organizations?.length > 0 && (
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+              )}
+
+              {/* Organization Section */}
+              {organizations && organizations.length > 0 && (
+                <section className="flex flex-col gap-6">
+                  <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Organizations
+                  </h2>
+                  <div className="flex flex-col gap-6">
+                    {organizations.map((org) => (
+                      <div 
+                        key={org._id} 
+                        className="group flex flex-col gap-2 border-b border-slate-800/50 pb-6 last:border-0 last:pb-0"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        Live Demo
-                      </a>
-                    )}
-                    {project.githubLink && (
-                      <a 
-                        href={project.githubLink} 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                        GitHub
-                      </a>
-                    )}
+                        <h3 className="text-lg font-semibold text-slate-200 group-hover:text-emerald-400 transition-colors">
+                          {org.organizationName}
+                        </h3>
+                        <h4 className="text-sm text-emerald-300/80 font-medium">
+                          {org.organizationRole}
+                        </h4>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-slate-500 text-xs font-medium">
+                            {org.startYear} - {org.endYear || "Present"}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </div>
-            ))}
+                </section>
+              )}
+              
+            </div>
           </div>
-        </section>
+        </div>
       </div>
 
       <Chatbot />

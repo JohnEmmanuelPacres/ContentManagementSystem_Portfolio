@@ -19,6 +19,18 @@ export default{
             type: 'date',
         },
         {
+            name: 'expirationDate',
+            title: 'Date of Expiration (if any)',
+            type: 'string',
+            description: "Leave empty if the credential does not expire",
+        },
+        {
+            name: 'credentialURL',
+            title: 'Credential URL',
+            type: 'url',
+            description: "URL of the credential, if any.",
+        },
+        {
             name: 'description',
             title: 'Summary',
             type: 'text',
