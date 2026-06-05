@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit, Roboto_Mono } from "next/font/google";
+import CursorGlow from "@/components/CursorGlow";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const roboto_mono = Roboto_Mono({
+  variable: "--font-roboto_mono",
   subsets: ["latin"],
 });
 
@@ -25,9 +26,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-slate-950 text-slate-200`}
+      className={`${outfit.className} ${roboto_mono.className} h-full antialiased bg-slate-950 text-slate-200`}
     >
-      <body className="min-h-full flex flex-col selection:bg-blue-500/30">{children}</body>
+      <body className="min-h-full flex flex-col selection:bg-blue-500/30">
+        <CursorGlow />
+        {children}
+      </body>
     </html>
   );
 }

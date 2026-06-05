@@ -59,11 +59,11 @@ export default async function Home() {
     }`
   );
 
-  const education = await client.fetch<Education[]>(`*[_type == "education"] | order(startYear desc) {
+  const education = await client.fetch<Education[]>(`*[_type == "education"] | order(endYear desc, startYear desc) {
     _id, universityName, courseName, address, startYear, endYear
   }`);
 
-  const works = await client.fetch<Work[]>(`*[_type == "work"] | order(startYear desc) {
+  const works = await client.fetch<Work[]>(`*[_type == "work"] | order(endYear desc, startYear desc) {
     _id, companyName, jobTitle, companyAddress, startYear, endYear
   }`);
 
@@ -72,7 +72,7 @@ export default async function Home() {
     "qrImage": qrImage.asset->url
   }`);
 
-  const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] | order(startYear desc) {
+  const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] | order(endYear desc, startYear desc) {
     _id, organizationName, organizationRole, startYear, endYear
   }`);
 
@@ -110,12 +110,12 @@ export default async function Home() {
 
           {/* Text Content */}
           <div className="flex-1 flex flex-col gap-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 w-fit">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 w-fit">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              <span className="text-sm font-medium text-blue-400">Available for work</span>
+              <span className="text-sm font-medium text-green-400">Available for work</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
@@ -277,9 +277,16 @@ export default async function Home() {
                       <h3 className="text-xl font-semibold text-slate-200 group-hover:text-indigo-400 transition-colors">
                         {project.title}
                       </h3>
-                      <p className="text-slate-400 text-sm leading-relaxed">
-                        {project.description}
-                      </p>
+                      <details className="group/details mt-1">
+                        <summary className="cursor-pointer text-sm font-medium text-indigo-400/80 hover:text-indigo-300 transition-colors list-none [&::-webkit-details-marker]:hidden flex items-center gap-1.5 select-none w-fit">
+                          <span className="group-open/details:hidden">About Project</span>
+                          <span className="hidden group-open/details:inline">Hide Summary</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-open/details:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+                        </summary>
+                        <p className="text-slate-400 text-sm leading-relaxed mt-3 pl-3 border-l-2 border-indigo-500/30">
+                          {project.description}
+                        </p>
+                      </details>
                       
                       {/* Tech Stack Pills */}
                       <div className="flex flex-wrap gap-2 mt-auto pt-4">
