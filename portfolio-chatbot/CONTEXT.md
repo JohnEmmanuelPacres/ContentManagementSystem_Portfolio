@@ -34,29 +34,30 @@ JE is a student at Cebu Institute of Technology - University, taking up Bachelor
 JE wrote his first block-based code in 2017 back in 7th Grade, using Scratch.
 
 ## Projects
-DataCamp Projects: https://github.com/JohnEmmanuelPacres/Datacamp_Projects
-Verilog Hexadecimal 7-Segment: https://github.com/JohnEmmanuelPacres/Hexadecimal_Verilog-HDL-FinalProject
-ASTRA Decision Support System Framework: https://github.com/JohnEmmanuelPacres/ASTRA-Decision-Support-System-Framework 
-EcoCalc Plus: https://github.com/JohnEmmanuelPacres/EcoCalc_Plus
-PacresEcoCalc: https://github.com/JohnEmmanuelPacres/PacresEcoCalc
+- DataCamp Projects: https://github.com/JohnEmmanuelPacres/Datacamp_Projects
+- Verilog Hexadecimal 7-Segment: https://github.com/JohnEmmanuelPacres/Hexadecimal_Verilog-HDL-FinalProject
+- EcoCalc Plus: https://github.com/JohnEmmanuelPacres/EcoCalc_Plus
+- PacresEcoCalc: https://github.com/JohnEmmanuelPacres/PacresEcoCalc
+- ASTRA Decision Support System Framework: https://github.com/JohnEmmanuelPacres/ASTRA-Decision-Support-System-Framework 
+- Voquadro: https://github.com/kemdav/voquadro
 
 ## Certifications
-Data Literacy from DataCamp.
-Python Data Associate from DataCamp.
+- Data Literacy from DataCamp.
+- Python Data Associate from DataCamp.
 
 ## Awards and Recognition
-JE included in Top 10 Philippines ranking in DataCamp x START-DOST. 
-JE won his first hackathon in 2025 held at Cebu Institute of Technology - University.
+- JE included in Top 10 Philippines ranking in DataCamp x START-DOST. 
+- JE placed 1st in 2025 NCR Atleos Innovation Challenge held at Cebu Institute of Technology - University.
 
 ## Memberships
-JE became a Community and Regional Relations Committee Member in 2026.
-JE became a DevCon Kids Cebu Chapter Logistics Committee Member in 2026.
-JE became a START-DOST x DataCamp scholar in 2025.
-JE volunteered at AWS Community Day Cebu 2025 held at University of the Philippines Cebu.
-JE became a ICPEP Student Chapter - Cebu Council Inc. Training and Seminar Committee Member in 2025.
-JE became a DOST scholar in 2023.
+- JE became a Community and Regional Relations Committee Member in 2026.
+- JE became a DevCon Kids Cebu Chapter Logistics Committee Member in 2026.
+- JE became a START-DOST x DataCamp scholar in 2025.
+- JE volunteered at AWS Community Day Cebu 2025 held at University of the Philippines Cebu.
+- JE became a ICPEP Student Chapter - Cebu Council Inc. Training and Seminar Committee Member in 2025.
+- JE became a DOST scholar in 2023.
 
 ## Contact and Links
-Email: pacresjohn029@gmail.com
-GitHub: https://github.com/JohnEmmanuelPacres
-LinkedIn: https://www.linkedin.com/in/john-emmanuel-pacres/
+- Email: pacresjohn029@gmail.com
+- GitHub: https://github.com/JohnEmmanuelPacres
+- LinkedIn: https://www.linkedin.com/in/john-emmanuel-pacres/
