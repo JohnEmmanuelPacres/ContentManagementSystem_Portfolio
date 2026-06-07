@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { client } from "@/sanity/client";
 import Chatbot from "@/components/Chatbot";
+import Typewriter from "@/components/Typewriter";
 
 type Certification = {
   _id: string;
@@ -59,6 +60,16 @@ type Contact = {
   phoneNumber: string;
 };
 
+type Achievement = {
+  _id: string;
+  achievementName: string;
+  awardDate: string;
+  awardingOrganization: string;
+  link: string;
+  description: string;
+  qrImage: string;
+}
+
 export default async function Home() {
   // Fetch data using GROQ syntax
   const projects = await client.fetch<Project[]>(`*[_type == "project"]{
@@ -77,6 +88,11 @@ export default async function Home() {
 
   const certifications = await client.fetch<Certification[]>(`*[_type == "certification"] | order(issueDate desc) {
     _id, "titleName": title, "issuerName": issuer, issueDate, expirationDate, description, credentialURL,
+    "qrImage": qrImage.asset->url
+  }`);
+
+  const achievements = await client.fetch<Achievement[]>(`*[_type == "achievement"] | order(awardDate desc) {
+    _id, "achievementName": achievement, awardDate, awardingOrganization, link, description,
     "qrImage": qrImage.asset->url
   }`);
 
@@ -163,8 +179,15 @@ export default async function Home() {
               </div>
             )}
             
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
-              A passionate Computer Engineering student and Developer based in Cebu City, Philippines.
+            <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed min-h-[60px] md:min-h-[84px]">
+              <Typewriter 
+                phrases={[
+                  "A passionate Computer Engineering student and Developer based in Cebu City, Philippines.",
+                  "Always eager to learn and explore new and emerging technologies.",
+                  "Interested in Machine Learning, Statistics, and Applied Calculus.",
+                  "Working to leverage AI and modern technologies to solve real world problems",
+                ]} 
+              />
             </p>
           </div>
         </section>
@@ -280,6 +303,82 @@ export default async function Home() {
                                 className="text-sm font-medium text-yellow-500/80 hover:text-yellow-400 flex items-center gap-1.5 transition-colors mt-1"
                               >
                                 View Credential
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Achievements Section */}
+            {achievements && achievements.length > 0 && (
+              <section className="flex flex-col gap-8">
+                <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-500"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                  Achievements
+                </h2>
+                <div className="flex flex-col gap-6">
+                  {achievements.map((achievement) => (
+                    <div 
+                      key={achievement._id} 
+                      className="group flex flex-col bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-orange-500/30 hover:bg-slate-800/50 transition-all duration-300 p-6"
+                    >
+                      <div className="flex flex-col sm:flex-row gap-6">
+                        {/* QR Image, if any */}
+                        {achievement.qrImage && (
+                          <div className="shrink-0 hidden sm:block">
+                            <div className="w-20 h-20 rounded-xl overflow-hidden border border-slate-700/50 bg-white p-1.5 shadow-inner">
+                              <img 
+                                src={achievement.qrImage} 
+                                alt="QR Code" 
+                                className="w-full h-full object-contain mix-blend-multiply"
+                              />
+                            </div>
+                          </div>
+                        )}
+                        <div className="flex-1 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                          <div className="flex flex-col gap-2">
+                            <h3 className="text-xl font-semibold text-slate-200 group-hover:text-orange-400 transition-colors flex items-center gap-3">
+                              {achievement.achievementName}
+                              {/* Mobile QR Image */}
+                              {achievement.qrImage && (
+                                <img 
+                                  src={achievement.qrImage} 
+                                  alt="QR" 
+                                  className="w-8 h-8 sm:hidden rounded bg-white p-0.5"
+                                />
+                              )}
+                            </h3>
+                            <h4 className="text-base text-orange-300/80 font-medium">
+                              {achievement.awardingOrganization}
+                            </h4>
+                            {achievement.description && (
+                              <p className="text-slate-400 text-sm mt-2 leading-relaxed">
+                                {achievement.description}
+                              </p>
+                            )}
+                          </div>
+                          <div className="shrink-0 flex flex-col items-start sm:items-end gap-3">
+                            <div className="flex flex-col gap-2 items-start sm:items-end">
+                              {achievement.awardDate && (
+                                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm font-medium whitespace-nowrap">
+                                  Date: {achievement.awardDate}
+                                </div>
+                              )}
+                            </div>
+                            {achievement.link && (
+                              <a 
+                                href={achievement.link} 
+                                target="_blank" 
+                                rel="noreferrer" 
+                                className="text-sm font-medium text-orange-500/80 hover:text-orange-400 flex items-center gap-1.5 transition-colors mt-1"
+                              >
+                                View Details
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                               </a>
                             )}

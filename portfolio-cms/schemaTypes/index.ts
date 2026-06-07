@@ -4,6 +4,7 @@ import education from "./education";
 import organization from "./organization";
 import work from "./work";
 import contact from "./contact";
+import achievement from "./achievement";
 
 export const schemaTypes = [
     project,
@@ -11,5 +12,6 @@ export const schemaTypes = [
     education,
     organization,
     work,
-    contact
+    contact,
+    achievement
 ]
