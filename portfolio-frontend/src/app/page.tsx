@@ -4,7 +4,7 @@ import path from "path";
 import { client } from "@/sanity/client";
 import Chatbot from "@/components/Chatbot";
 
-type Achievement = {
+type Certification = {
   _id: string;
   titleName: string;
   issuerName: string,
@@ -51,6 +51,14 @@ type Organization = {
   endYear: string;
 };
 
+type Contact = {
+  _id: string;
+  email: string;
+  linkedIn: string;
+  github: string;
+  phoneNumber: string;
+};
+
 export default async function Home() {
   // Fetch data using GROQ syntax
   const projects = await client.fetch<Project[]>(`*[_type == "project"]{
@@ -67,13 +75,17 @@ export default async function Home() {
     _id, companyName, jobTitle, companyAddress, startYear, endYear
   }`);
 
-  const achievements = await client.fetch<Achievement[]>(`*[_type == "achievement"] | order(issueDate desc) {
+  const certifications = await client.fetch<Certification[]>(`*[_type == "certification"] | order(issueDate desc) {
     _id, "titleName": title, "issuerName": issuer, issueDate, expirationDate, description, credentialURL,
     "qrImage": qrImage.asset->url
   }`);
 
   const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] | order(endYear desc, startYear desc) {
     _id, organizationName, organizationRole, startYear, endYear
+  }`);
+
+  const contacts = await client.fetch<Contact[]>(`*[_type == "contact"] {
+    _id, email, linkedIn, github, phoneNumber
   }`);
 
   // Check if profile.png exists in the public directory (Server-side check)
@@ -121,6 +133,36 @@ export default async function Home() {
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
               Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">JE Pacres</span>
             </h1>
+            
+            {contacts && contacts.length > 0 && (
+              <div className="flex flex-wrap items-center gap-4">
+                {contacts[0].phoneNumber && (
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 text-sm font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    {contacts[0].phoneNumber}
+                  </span>
+                )}
+                {contacts[0].email && (
+                  <a href={contacts[0].email.startsWith('mailto:') ? contacts[0].email : `mailto:${contacts[0].email}`} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 text-sm font-medium hover:bg-slate-700/50 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Email
+                  </a>
+                )}
+                {contacts[0].linkedIn && (
+                  <a href={contacts[0].linkedIn} target="_blank" rel="noreferrer" className="group/btn inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 text-sm font-medium hover:bg-[#0A66C2]/10 hover:border-[#0A66C2]/30 hover:text-[#0A66C2] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 group-hover/btn:text-[#0A66C2] transition-colors"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    LinkedIn
+                  </a>
+                )}
+                {contacts[0].github && (
+                  <a href={contacts[0].github} target="_blank" rel="noreferrer" className="group/btn inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 text-sm font-medium hover:bg-white/10 hover:border-white/30 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 group-hover/btn:text-white transition-colors"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    GitHub
+                  </a>
+                )}
+              </div>
+            )}
+            
             <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
               A passionate Computer Engineering student and Developer based in Cebu City, Philippines.
             </p>
@@ -171,26 +213,26 @@ export default async function Home() {
               </section>
             )}
 
-            {/* Achievements Section */}
-            {achievements && achievements.length > 0 && (
+            {/* Certifications Section */}
+            {certifications && certifications.length > 0 && (
               <section className="flex flex-col gap-8">
                 <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-500"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-                  Achievements & Certifications
+                  Certifications
                 </h2>
                 <div className="flex flex-col gap-6">
-                  {achievements.map((achievement) => (
+                  {certifications.map((certification) => (
                     <div 
-                      key={achievement._id} 
+                      key={certification._id} 
                       className="group flex flex-col bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-800 hover:border-yellow-500/30 hover:bg-slate-800/50 transition-all duration-300 p-6"
                     >
                       <div className="flex flex-col sm:flex-row gap-6">
                         {/* QR Image, if any */}
-                        {achievement.qrImage && (
+                        {certification.qrImage && (
                           <div className="shrink-0 hidden sm:block">
                             <div className="w-20 h-20 rounded-xl overflow-hidden border border-slate-700/50 bg-white p-1.5 shadow-inner">
                               <img 
-                                src={achievement.qrImage} 
+                                src={certification.qrImage} 
                                 alt="QR Code" 
                                 className="w-full h-full object-contain mix-blend-multiply"
                               />
@@ -200,39 +242,39 @@ export default async function Home() {
                         <div className="flex-1 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                           <div className="flex flex-col gap-2">
                             <h3 className="text-xl font-semibold text-slate-200 group-hover:text-yellow-400 transition-colors flex items-center gap-3">
-                              {achievement.titleName}
+                              {certification.titleName}
                               {/* Mobile QR Image */}
-                              {achievement.qrImage && (
+                              {certification.qrImage && (
                                 <img 
-                                  src={achievement.qrImage} 
+                                  src={certification.qrImage} 
                                   alt="QR" 
                                   className="w-8 h-8 sm:hidden rounded bg-white p-0.5"
                                 />
                               )}
                             </h3>
                             <h4 className="text-base text-yellow-300/80 font-medium">
-                              {achievement.issuerName}
+                              {certification.issuerName}
                             </h4>
-                            {achievement.description && (
+                            {certification.description && (
                               <p className="text-slate-400 text-sm mt-2 leading-relaxed">
-                                {achievement.description}
+                                {certification.description}
                               </p>
                             )}
                           </div>
                           <div className="shrink-0 flex flex-col items-start sm:items-end gap-3">
                             <div className="flex flex-col gap-2 items-start sm:items-end">
                               <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium whitespace-nowrap">
-                                Issued: {achievement.issueDate}
+                                Issued: {certification.issueDate}
                               </div>
-                              {achievement.expirationDate && (
+                              {certification.expirationDate && (
                                 <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-400 text-sm font-medium whitespace-nowrap">
-                                  Expires: {achievement.expirationDate}
+                                  Expires: {certification.expirationDate}
                                 </div>
                               )}
                             </div>
-                            {achievement.credentialURL && (
+                            {certification.credentialURL && (
                               <a 
-                                href={achievement.credentialURL} 
+                                href={certification.credentialURL} 
                                 target="_blank" 
                                 rel="noreferrer" 
                                 className="text-sm font-medium text-yellow-500/80 hover:text-yellow-400 flex items-center gap-1.5 transition-colors mt-1"
@@ -254,7 +296,7 @@ export default async function Home() {
             <section className="flex flex-col gap-8">
               <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-500"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                Featured Projects
+                Projects
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {projects.map((project) => (
@@ -358,7 +400,6 @@ export default async function Home() {
                         <div className="flex items-center justify-between mt-1">
                           {edu.address && (
                             <span className="text-slate-400 text-xs flex items-center gap-1.5">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
                               {edu.address}
                             </span>
                           )}
