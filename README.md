@@ -96,3 +96,7 @@ npm run dev
 
 To update website details such as achievements, certifications, contacts, etc., go to `portfolio-cms` folder, run `npm run dev`, and you will be redirected to `http://localhost:3333` (or specified port). There you can edit the details of the schemas setup inside the schemaTypes folder. Once done adding or updating the details, you can click publish and the website details will be updated. To view changes in the localhost, simply refresh the page. To update changes in the deployed website (e.g. vercel), redeploy the website.
 
+---
+
+will update later soon :)
+
