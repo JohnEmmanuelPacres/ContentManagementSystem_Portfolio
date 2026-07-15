@@ -1,4 +1,3 @@
-// src/app/page.tsx
 import fs from "fs";
 import path from "path";
 import { client } from "@/sanity/client";
