@@ -70,6 +70,13 @@ type Achievement = {
   qrImage: string;
 }
 
+function parseDateStr(dateStr: string): number {
+  if (!dateStr) return 0;
+  if (dateStr.toLowerCase() === "present") return Infinity;
+  const date = new Date(dateStr);
+  return isNaN(date.getTime()) ? 0 : date.getTime();
+}
+
 export default async function Home() {
   // Fetch data using GROQ syntax
   const projects = await client.fetch<Project[]>(`*[_type == "project"]{
@@ -96,9 +103,20 @@ export default async function Home() {
     "qrImage": qrImage.asset->url
   }`);
 
-  const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] | order(endYear desc, startYear desc) {
+  const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] {
     _id, organizationName, organizationRole, startYear, endYear
   }`);
+
+  organizations.sort((a, b) => {
+    const endA = parseDateStr(a.endYear);
+    const endB = parseDateStr(b.endYear);
+    if (endA !== endB) {
+      return endB - endA;
+    }
+    const startA = parseDateStr(a.startYear);
+    const startB = parseDateStr(b.startYear);
+    return startB - startA;
+  });
 
   const contacts = await client.fetch<Contact[]>(`*[_type == "contact"] {
     _id, email, linkedIn, github, phoneNumber
