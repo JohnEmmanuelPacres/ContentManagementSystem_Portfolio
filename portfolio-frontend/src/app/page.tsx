@@ -155,13 +155,6 @@ export default async function Home() {
 
           {/* Text Content */}
           <div className="flex-1 flex flex-col gap-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 w-fit">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-              </span>
-              <span className="text-sm font-medium text-green-400">Available for work</span>
-            </div>
             
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
               Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">JE Pacres</span>

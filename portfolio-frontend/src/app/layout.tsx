@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Roboto_Mono } from "next/font/google";
 import CursorGlow from "@/components/CursorGlow";
+import Background3D from "@/components/Background3D";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -28,9 +29,12 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.className} ${roboto_mono.className} h-full antialiased bg-slate-950 text-slate-200`}
     >
-      <body className="min-h-full flex flex-col selection:bg-blue-500/30">
+      <body className="min-h-full flex flex-col selection:bg-blue-500/30 relative">
         <CursorGlow />
-        {children}
+        <Background3D />
+        <main className="relative z-0 flex-1 flex flex-col">
+          {children}
+        </main>
       </body>
     </html>
   );
