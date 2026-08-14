@@ -59,7 +59,7 @@ export default function Typewriter({
   return (
     <span className={className}>
       {text}
-      <span className="animate-pulse border-r-2 border-blue-400 ml-1 h-full inline-block align-middle -mt-1" style={{ height: '1.2em' }}></span>
+      <span className="animate-pulse border-r-2 border-emerald-400 ml-1 h-full inline-block align-middle -mt-1" style={{ height: '1.2em' }}></span>
     </span>
   );
 }

@@ -53,11 +53,11 @@ export default function Chatbot() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
       {/* Chat Window */}
       <div 
-        className={`transition-all duration-300 origin-bottom-right flex flex-col bg-slate-900/85 backdrop-blur-2xl rounded-2xl shadow-2xl border border-slate-700 overflow-hidden w-[340px] sm:w-[380px] h-[500px] max-h-[80vh] ${
+        className={`transition-all duration-300 origin-bottom-right flex flex-col bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-hidden w-[340px] sm:w-[380px] h-[500px] max-h-[80vh] ${
           isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none absolute bottom-16 right-0'
         }`}
       >
-        <div className="bg-slate-800/80 p-4 border-b border-slate-700 flex justify-between items-center">
+        <div className="bg-slate-900 p-4 border-b border-slate-700 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <h3 className="font-semibold text-slate-100">AI Assistant</h3>
@@ -71,7 +71,7 @@ export default function Chatbot() {
         <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-4">
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
               </div>
               <p className="text-slate-400 text-sm">Hi! I'm JE's AI assistant. Ask me anything about his skills or projects!</p>
@@ -82,7 +82,7 @@ export default function Chatbot() {
               key={idx} 
               className={`p-3 rounded-2xl max-w-[85%] text-sm leading-relaxed ${
                 msg.role === 'user' 
-                  ? 'bg-blue-600 text-white self-end rounded-br-sm' 
+                  ? 'bg-emerald-600 text-white self-end rounded-br-sm' 
                   : 'bg-slate-800 text-slate-200 border border-slate-700/50 self-start rounded-bl-sm prose prose-sm prose-invert max-w-none'
               }`}
             >
@@ -110,13 +110,13 @@ export default function Chatbot() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question..."
-            className="flex-1 bg-slate-800 border border-slate-700 text-slate-200 px-4 py-2.5 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-500"
+            className="flex-1 bg-slate-800 border border-slate-700 text-slate-200 px-4 py-2.5 rounded-full text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-slate-500"
             disabled={isLoading}
           />
           <button 
             type="submit" 
             disabled={isLoading || !input.trim()}
-            className="bg-blue-600 hover:bg-blue-500 text-white p-2.5 rounded-full transition-all disabled:bg-slate-800 disabled:text-slate-600 flex items-center justify-center"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white p-2.5 rounded-full transition-all disabled:bg-slate-800 disabled:text-slate-600 flex items-center justify-center"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
@@ -126,8 +126,8 @@ export default function Chatbot() {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full shadow-lg shadow-blue-900/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-105 active:scale-95 ${
-          isOpen ? 'bg-slate-800 rotate-90' : 'bg-blue-600 hover:bg-blue-500'
+        className={`w-14 h-14 rounded-full shadow-lg shadow-emerald-900/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-105 active:scale-95 ${
+          isOpen ? 'bg-slate-800 rotate-90' : 'bg-emerald-600 hover:bg-emerald-500'
         }`}
       >
         {isOpen ? (

@@ -102,7 +102,7 @@ const MODELS_DATA: ModelProps[] = [
 ];
 
 export default function Background3D() {
-  const [isDraggable, setIsDraggable] = useState(false);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [chibiScale, setChibiScale] = useState(1.5);
 
   return (
@@ -110,22 +110,22 @@ export default function Background3D() {
       {/* UI Controls - placed outside the background so it can be clicked above other content */}
       <div className="fixed top-8 right-8 z-50 flex flex-col items-end gap-4">
         <button
-          onClick={() => setIsDraggable(!isDraggable)}
-          className={`w-14 h-7 rounded-full flex items-center transition-colors p-1 shadow-lg border border-white/10 ${
-            isDraggable ? "bg-indigo-500" : "bg-slate-800"
+          onClick={() => setShowEasterEgg(!showEasterEgg)}
+          className={`w-14 h-7 rounded-full flex items-center transition-colors p-1 shadow-lg border border-slate-700 ${
+            showEasterEgg ? "bg-emerald-500" : "bg-slate-800"
           }`}
-          title="Toggle Drag Mode"
+          title="Toggle Easter Egg"
         >
           <div
             className={`w-5 h-5 bg-white rounded-full shadow-md transition-transform duration-300 ${
-              isDraggable ? "translate-x-7" : "translate-x-0"
+              showEasterEgg ? "translate-x-7" : "translate-x-0"
             }`}
           />
         </button>
 
         {/* Size Slider */}
-        {isDraggable && (
-          <div className="bg-slate-900/80 backdrop-blur-md p-3 rounded-xl border border-white/10 shadow-xl flex flex-col items-center gap-2 transition-all">
+        {showEasterEgg && (
+          <div className="bg-slate-900/90 p-3 rounded-xl border border-slate-700 shadow-xl flex flex-col items-center gap-2 transition-all">
             <label className="text-xs font-semibold text-slate-300 tracking-wider uppercase">Size</label>
             <input 
               type="range" 
@@ -134,54 +134,47 @@ export default function Background3D() {
               step="0.1" 
               value={chibiScale}
               onChange={(e) => setChibiScale(parseFloat(e.target.value))}
-              className="w-24 accent-indigo-500 cursor-pointer"
+              className="w-24 accent-emerald-500 cursor-pointer"
             />
           </div>
         )}
       </div>
 
-      {/* 
-        When isDraggable is true, we bring the canvas in front of the main content (z-40) 
-        and enable pointer events so the user can interact with the 3D models.
-        Otherwise, it stays in the background (-z-10) and ignores pointer events.
-      */}
-      <div 
-        className={`fixed inset-0 w-full h-full transition-all duration-300 ${
-          isDraggable ? "z-40 pointer-events-auto bg-slate-950/20 backdrop-blur-sm" : "-z-10 pointer-events-none"
-        }`}
-      >
-        <Canvas camera={{ position: [0, 1, 10], fov: 50 }}>
-          {/* Outer Space Background Stars */}
-          <Stars 
-            radius={100} 
-            depth={50} 
-            count={5000} 
-            factor={4} 
-            saturation={0} 
-            fade 
-            speed={1} 
-          />
+      {showEasterEgg && (
+        <div className="fixed inset-0 w-full h-full -z-10 pointer-events-auto transition-all duration-500 animate-in fade-in">
+          <Canvas camera={{ position: [0, 1, 10], fov: 50 }}>
+            {/* Outer Space Background Stars */}
+            <Stars 
+              radius={100} 
+              depth={50} 
+              count={5000} 
+              factor={4} 
+              saturation={0} 
+              fade 
+              speed={1} 
+            />
 
-          {/* Basic Lighting */}
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[10, 10, 5]} intensity={1} />
-          
-          {/* Environment lighting for better reflections/materials */}
-          <Environment preset="city" />
-          
-          {/* Suspense is needed while the model loads asynchronously */}
-          <Suspense fallback={null}>
-            {MODELS_DATA.map((data, index) => (
-              <DancingModel 
-                key={index} 
-                modelPath={data.modelPath} 
-                position={data.position} 
-                scale={chibiScale}
-              />
-            ))}
-          </Suspense>
-        </Canvas>
-      </div>
+            {/* Basic Lighting */}
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[10, 10, 5]} intensity={1} />
+            
+            {/* Environment lighting for better reflections/materials */}
+            <Environment preset="city" />
+            
+            {/* Suspense is needed while the model loads asynchronously */}
+            <Suspense fallback={null}>
+              {MODELS_DATA.map((data, index) => (
+                <DancingModel 
+                  key={index} 
+                  modelPath={data.modelPath} 
+                  position={data.position} 
+                  scale={chibiScale}
+                />
+              ))}
+            </Suspense>
+          </Canvas>
+        </div>
+      )}
     </>
   );
 }
