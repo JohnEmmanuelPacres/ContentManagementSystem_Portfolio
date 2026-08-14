@@ -6,7 +6,7 @@ from google.genai import types
 # pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
 # pyrefly: ignore [missing-import]
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 # pyrefly: ignore [missing-import]
 from fastapi import FastAPI, HTTPException
 # pyrefly: ignore [missing-import]
@@ -38,7 +38,7 @@ app.add_middleware(
 # define the request and data model
 
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(..., max_length=1000)
 
 @app.post('/api/chat')
 async def handle_chat(request: ChatRequest):

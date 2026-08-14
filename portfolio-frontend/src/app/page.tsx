@@ -77,34 +77,40 @@ function parseDateStr(dateStr: string): number {
 }
 
 export default async function Home() {
-  // Fetch data using GROQ syntax
-  const projects = await client.fetch<Project[]>(`*[_type == "project"]{
-    _id, title, description, techStack, liveUrl, githubLink,
-    "imageUrl": mainImage.asset->url
-    }`
-  );
-
-  const education = await client.fetch<Education[]>(`*[_type == "education"] | order(endYear desc, startYear desc) {
-    _id, universityName, courseName, address, startYear, endYear
-  }`);
-
-  const works = await client.fetch<Work[]>(`*[_type == "work"] | order(endYear desc, startYear desc) {
-    _id, companyName, jobTitle, companyAddress, startYear, endYear
-  }`);
-
-  const certifications = await client.fetch<Certification[]>(`*[_type == "certification"] | order(issueDate desc) {
-    _id, "titleName": title, "issuerName": issuer, issueDate, expirationDate, description, credentialURL,
-    "qrImage": qrImage.asset->url
-  }`);
-
-  const achievements = await client.fetch<Achievement[]>(`*[_type == "achievement"] | order(awardDate desc) {
-    _id, "achievementName": achievement, awardDate, awardingOrganization, link, description,
-    "qrImage": qrImage.asset->url
-  }`);
-
-  const organizations = await client.fetch<Organization[]>(`*[_type == "organization"] {
-    _id, organizationName, organizationRole, startYear, endYear
-  }`);
+  const [
+    projects,
+    education,
+    works,
+    certifications,
+    achievements,
+    organizations,
+    contacts,
+  ] = await Promise.all([
+    client.fetch<Project[]>(`*[_type == "project"]{
+      _id, title, description, techStack, liveUrl, githubLink,
+      "imageUrl": mainImage.asset->url
+    }`),
+    client.fetch<Education[]>(`*[_type == "education"] | order(endYear desc, startYear desc) {
+      _id, universityName, courseName, address, startYear, endYear
+    }`),
+    client.fetch<Work[]>(`*[_type == "work"] | order(endYear desc, startYear desc) {
+      _id, companyName, jobTitle, companyAddress, startYear, endYear
+    }`),
+    client.fetch<Certification[]>(`*[_type == "certification"] | order(issueDate desc) {
+      _id, "titleName": title, "issuerName": issuer, issueDate, expirationDate, description, credentialURL,
+      "qrImage": qrImage.asset->url
+    }`),
+    client.fetch<Achievement[]>(`*[_type == "achievement"] | order(awardDate desc) {
+      _id, "achievementName": achievement, awardDate, awardingOrganization, link, description,
+      "qrImage": qrImage.asset->url
+    }`),
+    client.fetch<Organization[]>(`*[_type == "organization"] {
+      _id, organizationName, organizationRole, startYear, endYear
+    }`),
+    client.fetch<Contact[]>(`*[_type == "contact"] {
+      _id, email, linkedIn, github, phoneNumber
+    }`)
+  ]);
 
   organizations.sort((a, b) => {
     const endA = parseDateStr(a.endYear);
@@ -117,9 +123,6 @@ export default async function Home() {
     return startB - startA;
   });
 
-  const contacts = await client.fetch<Contact[]>(`*[_type == "contact"] {
-    _id, email, linkedIn, github, phoneNumber
-  }`);
 
   // Check if profile.png exists in the public directory (Server-side check)
   const hasProfileImage = fs.existsSync(path.join(process.cwd(), "public", "profile.png"));
