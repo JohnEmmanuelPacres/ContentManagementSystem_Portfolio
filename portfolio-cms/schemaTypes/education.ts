@@ -31,4 +31,10 @@ export default{
             description: 'Enter a year (e.g., "2024") or "Present"',
         },
     ],
+    preview: {
+        select: {
+            title: 'universityName',
+            subtitle: 'courseName'
+        }
+    }
 }

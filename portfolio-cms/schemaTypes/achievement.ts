@@ -39,5 +39,11 @@ export default {
             title: 'Description',
             type: 'text',
         },
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'achievement',
+            subtitle: 'awardingOrganization'
+        }
+    }
 }

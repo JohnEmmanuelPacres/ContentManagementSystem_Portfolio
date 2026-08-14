@@ -30,5 +30,11 @@ export default{
             type: 'string',
             description: 'Enter a year (e.g., "2024") or "Present"',
         },
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'companyName',
+            subtitle: 'jobTitle'
+        }
+    }
 }
