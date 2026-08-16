@@ -112,7 +112,7 @@ export default function Background3D() {
         <button
           onClick={() => setShowEasterEgg(!showEasterEgg)}
           className={`w-14 h-7 rounded-full flex items-center transition-colors p-1 shadow-lg border border-slate-700 ${
-            showEasterEgg ? "bg-emerald-500" : "bg-slate-800"
+            showEasterEgg ? "bg-blue-500" : "bg-slate-800"
           }`}
           title="Toggle Easter Egg"
         >
@@ -134,7 +134,7 @@ export default function Background3D() {
               step="0.1" 
               value={chibiScale}
               onChange={(e) => setChibiScale(parseFloat(e.target.value))}
-              className="w-24 accent-emerald-500 cursor-pointer"
+              className="w-24 accent-blue-500 cursor-pointer"
             />
           </div>
         )}

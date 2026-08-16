@@ -1,3 +1,4 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@900,800,700,500,400&f[]=switzer@900,700,600,500,400,300&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -9,13 +10,57 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Switzer", sans-serif;
+  --font-heading: "Cabinet Grotesk", sans-serif;
+  --font-mono: monospace;
+  --animate-spin-slow: spin 20s linear infinite;
+  --animate-spin-reverse: spin-reverse 20s linear infinite;
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@utility chamfer {
+  clip-path: polygon(
+    16px 0, 
+    calc(100% - 16px) 0, 
+    100% 16px, 
+    100% calc(100% - 16px), 
+    calc(100% - 16px) 100%, 
+    16px 100%, 
+    0 calc(100% - 16px), 
+    0 16px
+  );
+}
+
+@utility gear {
+  clip-path: polygon(
+    42% 0%, 58% 0%, 62% 15%, 70% 18%, 
+    80% 8%, 92% 20%, 82% 30%, 85% 38%, 
+    100% 42%, 100% 58%, 85% 62%, 82% 70%, 
+    92% 80%, 80% 92%, 70% 82%, 62% 85%, 
+    58% 100%, 42% 100%, 38% 85%, 30% 82%, 
+    20% 92%, 8% 80%, 18% 70%, 15% 62%, 
+    0% 58%, 0% 42%, 15% 38%, 18% 30%, 
+    8% 20%, 20% 8%, 30% 18%, 38% 15%
+  );
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #020617;
+    --foreground: #eff6ff;
   }
 }
