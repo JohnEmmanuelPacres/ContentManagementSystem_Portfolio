@@ -43,7 +43,7 @@ class ChatRequest(BaseModel):
 @app.post('/api/chat')
 async def handle_chat(request: ChatRequest):
     try:
-        response = await client.aio.models.generate_content_async(
+        response = await client.aio.models.generate_content(
             model='gemini-2.5-flash',
             contents=request.message,
             config=types.GenerateContentConfig(
