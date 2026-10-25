@@ -8,10 +8,10 @@ Instead of manually updating source code for new projects or achievements, this 
 
 ## Key Features
 
-* **Premium Dark Mode & Glassmorphism**: Designed with a sleek dark aesthetic (`slate-950` background), glowing background auroras, responsive flex/grid layouts, and responsive side-by-side hero sections.
-* **Micro-Animations**: Hover-triggered glowing border highlights, scale-up transformations on project cards, and a subtle glowing aura around the profile photo.
-* **CMS-Driven Portfolio Content**: Real-time project syncing (title, description, tech stack, and thumbnail images) using GROQ queries to pull directly from Sanity.
-* **Interactive AI Assistant**: A custom floating chatbot widget in the bottom-right corner built with a glassmorphic popup UI, real-time "thinking" typing indicator, message autoscrolling, and a FastAPI Python backend.
+- **Premium Dark Mode & Glassmorphism**: Designed with a sleek dark aesthetic (`slate-950` background), glowing background auroras, responsive flex/grid layouts, and responsive side-by-side hero sections.
+- **Micro-Animations**: Hover-triggered glowing border highlights, scale-up transformations on project cards, and a subtle glowing aura around the profile photo.
+- **CMS-Driven Portfolio Content**: Real-time project syncing (title, description, tech stack, and thumbnail images) using GROQ queries to pull directly from Sanity.
+- **Interactive AI Assistant**: A custom floating chatbot widget in the bottom-right corner built with a glassmorphic popup UI, real-time "thinking" typing indicator, message autoscrolling, and a FastAPI Python backend.
 
 ---
 
@@ -19,17 +19,17 @@ Instead of manually updating source code for new projects or achievements, this 
 
 This repository is organized as a monorepo containing three primary services:
 
-* **`portfolio-frontend/`**: The Next.js client-side application. It fetches project details from the CMS and handles the user interface.
-* **`portfolio-cms/`**: The headless Content Management System powered by Sanity.io. This handles the content schema and database entries.
-* **`portfolio-chatbot/`**: A FastAPI Python backend that handles communication with the Google Gemini model.
+- **`portfolio-frontend/`**: The Next.js client-side application. It fetches project details from the CMS and handles the user interface.
+- **`portfolio-cms/`**: The headless Content Management System powered by Sanity.io. This handles the content schema and database entries.
+- **`portfolio-chatbot/`**: A FastAPI Python backend that handles communication with the Google Gemini model.
 
 ---
 
 ## Built With
 
-* **Frontend**: Next.js 15+ (React 19, TypeScript, Tailwind CSS v4, Framer Motion/Native CSS transitions)
-* **CMS**: Sanity v3 Studio (GROQ query language)
-* **Chatbot Backend**: Python 3.10+ (FastAPI, Google GenAI SDK, Uvicorn)
+- **Frontend**: Next.js 15+ (React 19, TypeScript, Tailwind CSS v4, Framer Motion/Native CSS transitions)
+- **CMS**: Sanity v3 Studio (GROQ query language)
+- **Chatbot Backend**: Python 3.10+ (FastAPI, Google GenAI SDK, Uvicorn)
 
 ---
 
@@ -37,30 +37,42 @@ This repository is organized as a monorepo containing three primary services:
 
 Before you begin, ensure you have the following installed and set up on your local machine:
 
-* **Node.js** (v18.17 or higher recommended)
-* **Python** (v3.10 or higher)
-* **Git** (for version control)
-* **Google Gemini API Key** (required for the chatbot backend to function)
-* **Sanity.io Account** (for managing the CMS content)
+- **Node.js** (v18.17 or higher recommended)
+- **Python** (v3.10 or higher)
+- **Git** (for version control)
+- **Google Gemini API Key** (required for the chatbot backend to function)
+- **Sanity.io Account** (for managing the CMS content)
 
-*Note: You will also need to configure your environment variables (like your Gemini API key and Sanity project ID) in their respective service directories before running the servers.*
+_Note: You will also need to configure your environment variables (like your Gemini API key and Sanity project ID) in their respective service directories before running the servers._
 
 ---
+
 ## Getting Started
 
 Follow the steps below to start each service locally on your machine.
 
 ### 1. Start the CMS Studio
+
 Navigate to the CMS directory, install dependencies, and start the local Sanity Studio server:
+
 ```bash
 cd portfolio-cms
 npm install
 npm run dev
 ```
-*The Sanity Studio panel will run on **`http://localhost:3333`**.*
+
+_The Sanity Studio panel will run on **`http://localhost:3333`**._
+
+## Updating Sanity
+
+```bash
+npm update sanity
+```
 
 ### 2. Start the Chatbot Backend
+
 Navigate to the chatbot directory, activate your Python virtual environment, install dependencies, and launch the Uvicorn server:
+
 ```bash
 cd portfolio-chatbot
 
@@ -79,16 +91,20 @@ pip install -r requirements.txt
 # Start the server
 uvicorn main:app --reload
 ```
-*The FastAPI chatbot backend will run on **`http://127.0.0.1:8000`**.*
+
+_The FastAPI chatbot backend will run on **`http://127.0.0.1:8000`**._
 
 ### 3. Start the Next.js Frontend
+
 Navigate to the frontend directory, install dependencies, and launch the Next.js development server:
+
 ```bash
 cd portfolio-frontend
 npm install
 npm run dev
 ```
-*The frontend user interface will run on **`http://localhost:3000`**.*
+
+_The frontend user interface will run on **`http://localhost:3000`**._
 
 ---
 
@@ -97,6 +113,3 @@ npm run dev
 To update website details such as achievements, certifications, contacts, etc., go to `portfolio-cms` folder, run `npm run dev`, and you will be redirected to `http://localhost:3333` (or specified port). There you can edit the details of the schemas setup inside the schemaTypes folder. Once done adding or updating the details, you can click publish and the website details will be updated. To view changes in the localhost, simply refresh the page. To update changes in the deployed website (e.g. vercel), redeploy the website.
 
 ---
-
-will update later soon :)
-
